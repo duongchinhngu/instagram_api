@@ -28,7 +28,6 @@ namespace Instagram.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=desktop-82qos6o\\sqlexpress;Database=InstagramDB;Trusted_Connection=True;");
             }
         }
@@ -54,7 +53,7 @@ namespace Instagram.Models
 
                 entity.Property(e => e.PostId).HasColumnName("PostID");
 
-                entity.HasOne(d => d.CreatedByNavigation)
+                entity.HasOne(d => d.Creator)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.CreatedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -118,11 +117,12 @@ namespace Instagram.Models
 
             modelBuilder.Entity<PostImage>(entity =>
             {
-                entity.HasNoKey();
 
                 entity.ToTable("PostImage");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.ImageUrl)
                     .IsRequired()
@@ -132,7 +132,7 @@ namespace Instagram.Models
                 entity.Property(e => e.PostId).HasColumnName("PostID");
 
                 entity.HasOne(d => d.Post)
-                    .WithMany()
+                    .WithMany( prop => prop.PostImages)
                     .HasForeignKey(d => d.PostId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PostImage_Post");
@@ -153,13 +153,13 @@ namespace Instagram.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.ReactToNavigation)
+                entity.HasOne(d => d.ReactTarget)
                     .WithMany(p => p.Reactions)
                     .HasForeignKey(d => d.ReactTo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Reaction_Comment");
 
-                entity.HasOne(d => d.ReactTo1)
+                entity.HasOne(d => d.ReactTarget)
                     .WithMany(p => p.Reactions)
                     .HasForeignKey(d => d.ReactTo)
                     .OnDelete(DeleteBehavior.ClientSetNull)

@@ -20,7 +20,7 @@ namespace Instagram.Models
         public DateTime ModifiedAt { get; set; }
         public bool IsAvailable { get; set; }
 
-        public virtual User CreatedByNavigation { get; set; }
+        public virtual User Creator { get; set; }
         public virtual Post Post { get; set; }
         public virtual ICollection<Reaction> Reactions { get; set; }
     }

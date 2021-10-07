@@ -23,5 +23,6 @@ namespace Instagram.Models
         public virtual User Owner { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Reaction> Reactions { get; set; }
+        public virtual ICollection<PostImage> PostImages { get; set; }
     }
 }

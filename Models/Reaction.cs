@@ -13,7 +13,7 @@ namespace Instagram.Models
         public DateTime CreatedAt { get; set; }
         public string ReactType { get; set; }
 
-        public virtual Post ReactTo1 { get; set; }
-        public virtual Comment ReactToNavigation { get; set; }
+        public virtual Post ReactTarget { get; set; }
+        public virtual Comment Comment { get; set; }
     }
 }
