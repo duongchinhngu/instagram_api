@@ -1,4 +1,5 @@
-﻿using Instagram.Models;
+﻿using Instagram.Helpers.SortHelpers;
+using Instagram.Models;
 using Instagram.Repositories;
 using Instagram.Repositories.IRepositories;
 using System;
@@ -11,11 +12,13 @@ namespace Instagram.UnitOfWorks
     public class UnitOfWork : IUnitOfWork
     {
         private readonly InstagramDBContext context;
+        private readonly ISortHelper sortHelper;
         private bool disposedValue;
 
-        public UnitOfWork(InstagramDBContext context)
+        public UnitOfWork(InstagramDBContext context, ISortHelper sortHelper)
         {
             this.context = context;
+            this.sortHelper = sortHelper;
             InitRepositories();
         }
 
@@ -24,7 +27,7 @@ namespace Instagram.UnitOfWorks
 
         private void InitRepositories()
         {
-            IPostRepository = new PostRepository(context);
+            IPostRepository = new PostRepository(context, sortHelper);
             IPostImageRepository = new PostImageRepository(context);
         }
 

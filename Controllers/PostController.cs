@@ -22,10 +22,9 @@ namespace Instagram.Controllers
             this.service = service;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<PagingResponse<PostDto>>> GetHomeScreenPost(GetHomePostRequest request)
+        [HttpGet]
+        public async Task<ActionResult<PagingResponse<PostDto>>> GetHomeScreenPost([FromQuery]GetHomePostRequest request)
         {
-            
             try
             {
                 if (request == null)

@@ -11,5 +11,6 @@ namespace Instagram.HttpMessages.Dtos
         public DateTime ModifiedAt { get; set; }
         public string Caption { get; set; }
         public List<PostImageDto> Images { get; set; }
+        public UserDto Owner { get; set; }
     }
 }

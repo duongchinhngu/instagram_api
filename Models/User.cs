@@ -24,7 +24,6 @@ namespace Instagram.Models
         public string Gender { get; set; }
         public DateTime Birthdate { get; set; }
         public string ProfileUrl { get; set; }
-        public string Status { get; set; }
         public DateTime RegisterAt { get; set; }
         public bool IsActive { get; set; }
 

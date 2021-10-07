@@ -204,11 +204,6 @@ namespace Instagram.Models
 
                 entity.Property(e => e.RegisterAt).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(124)

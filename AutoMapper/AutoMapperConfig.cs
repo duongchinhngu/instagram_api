@@ -14,18 +14,25 @@ namespace Instagram.AutoMapper
             CreateMapFromImagePostToImagePostDto();
             CreateMapFromPostToPostDto();
             CreateMapFromPagedListToPagingResponse();
+            CreateMapFromImageUserToImageUserDto();
         }
 
         private void CreateMapFromPostToPostDto()
         {
             CreateMap<Post, PostDto>()
                 .ForMember(dest => dest.Images, opts => opts.MapFrom(p => p.PostImages))
+                .ForMember(dest => dest.Owner, opts => opts.MapFrom(p => p.Owner))
                 .ReverseMap();
         }
 
         private void CreateMapFromImagePostToImagePostDto()
         {
             CreateMap<PostImage, PostImageDto>().ReverseMap();
+        }
+
+        private void CreateMapFromImageUserToImageUserDto()
+        {
+            CreateMap<User, UserDto>().ReverseMap();
         }
 
         private void CreateMapFromPagedListToPagingResponse()

@@ -1,4 +1,5 @@
 ﻿using Instagram.Helpers;
+using Instagram.Helpers.SortHelpers;
 using Instagram.HttpMessages.Requests;
 using Instagram.Models;
 using Instagram.Repositories.IRepositories;
@@ -12,10 +13,12 @@ namespace Instagram.Repositories
     public class PostRepository : GenericRepository<Post>, IPostRepository
     {
         private readonly InstagramDBContext context;
+        private readonly ISortHelper sortHelper;
 
-        public PostRepository(InstagramDBContext context) : base(context)
+        public PostRepository(InstagramDBContext context, ISortHelper sortHelper) : base(context)
         {
             this.context = context;
+            this.sortHelper = sortHelper;
         }
 
         public async override Task<Post> GetById(Guid id)
@@ -26,8 +29,9 @@ namespace Instagram.Repositories
 
         public async Task<PagedList<Post>> QueryPost(GetHomePostRequest request)
         {
-            var posts = context.Posts.Include(s => s.PostImages).AsQueryable();
-            return PagedList<Post>.ToPagedList(posts, request.PageNumber, request.PageSize);
+            var entities = context.Posts.Include(s => s.PostImages).Include( s => s.Owner).AsQueryable();
+            sortHelper.ApplySort<Post>(ref entities, request.SortBy, request.OrderBy);
+            return PagedList<Post>.ToPagedList(entities, request.PageNumber, request.PageSize);
         }
     }
 }

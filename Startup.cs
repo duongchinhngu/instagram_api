@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Instagram.AutoMapper;
+using Instagram.Helpers.SortHelpers;
 using Instagram.Models;
 using Instagram.Services;
 using Instagram.Services.IServices;
@@ -35,6 +36,7 @@ namespace Instagram
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IPostImageService, PostImageService>();
+            services.AddScoped<ISortHelper, SortHelper>();
         }
         #endregion
 
