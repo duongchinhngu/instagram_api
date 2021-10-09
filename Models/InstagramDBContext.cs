@@ -126,7 +126,7 @@ namespace Instagram.Models
 
                 entity.Property(e => e.ImageUrl)
                     .IsRequired()
-                    .HasMaxLength(124)
+                    .HasMaxLength(2048)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PostId).HasColumnName("PostID");

@@ -26,7 +26,7 @@ namespace Instagram.HttpMessages.Requests
         //for sorting
         [FromQuery(Name = "order-by")]
         [EnumDataType(typeof(OrderType))]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public OrderType OrderBy { get; set; } = OrderType.None;
 
         [FromQuery(Name = "sort-by")]

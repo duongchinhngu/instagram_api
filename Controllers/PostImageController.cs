@@ -37,7 +37,7 @@ namespace Instagram.Controllers
 
                 var result = await service.GetByPostId(guidId);
 
-                if( result == null || !result.Any())
+                if( result is null || !result.Any())
                 {
                     return NotFound();
                 }

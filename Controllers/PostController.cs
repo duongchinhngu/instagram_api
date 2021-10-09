@@ -23,26 +23,19 @@ namespace Instagram.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagingResponse<PostDto>>> GetHomeScreenPost([FromQuery]GetHomePostRequest request)
+        public async Task<ActionResult<PagingResponse<PostDto>>> GetHomeScreenPost([FromQuery] GetHomePostRequest request)
         {
             try
             {
-                if (request == null)
-                {
-                    return BadRequest("request must not be null..");
-                }
+                if (request is null) return BadRequest("request must not be null..");
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Request has an invalid field input..");
-                }
+
+                if (!ModelState.IsValid) return BadRequest("Request has an invalid field input..");
+
 
                 var result = await service.QueryPost(request);
 
-                if (result == null || result.Data == null || !result.Data.Any())
-                {
-                    return NotFound();
-                }
+                if (result is null || result.Data is null || !result.Data.Any()) return NotFound();
 
                 return Ok(result);
             }
@@ -57,7 +50,7 @@ namespace Instagram.Controllers
         {
             try
             {
-                if(string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(id))
                 {
                     return BadRequest("Id must be provided..");
                 }
@@ -69,7 +62,7 @@ namespace Instagram.Controllers
 
                 var result = await service.GetByID(guidId);
 
-                if( result == null)
+                if (result is null)
                 {
                     return NotFound();
                 }
