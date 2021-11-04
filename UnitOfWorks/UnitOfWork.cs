@@ -24,11 +24,14 @@ namespace Instagram.UnitOfWorks
 
         public IPostRepository IPostRepository { get; private set; }
         public IPostImageRepository IPostImageRepository { get; private set; }
+        public IUserRepository IUserRepository { get; private set; }
+
 
         private void InitRepositories()
         {
             IPostRepository = new PostRepository(context, sortHelper);
             IPostImageRepository = new PostImageRepository(context);
+            IUserRepository = new UserRepository(context);
         }
 
         public async Task Commit()

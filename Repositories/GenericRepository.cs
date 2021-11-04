@@ -2,6 +2,7 @@
 using Instagram.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Instagram.Repositories
@@ -17,13 +18,18 @@ namespace Instagram.Repositories
             this.dbSet = context.Set<TEntity>();
         }
 
-        public async Task Add(TEntity entity)
+        public virtual void Add(TEntity entity)
+        {
+            dbSet.Add(entity);
+        }
+
+        public virtual async Task AddAndSave(TEntity entity)
         {
             dbSet.Add(entity);
             await context.SaveChangesAsync();
         }
 
-        public async Task Delete(TEntity entity)
+        public virtual async Task Delete(TEntity entity)
         {
             dbSet.Remove(entity);
             await context.SaveChangesAsync();
@@ -34,7 +40,12 @@ namespace Instagram.Repositories
             return await dbSet.FindAsync(id);
         }
 
-        public async Task Update(TEntity entity)
+        public virtual void Update(TEntity entity)
+        {
+            context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public async Task UpdateAndSave(TEntity entity)
         {
             context.Entry(entity).State = EntityState.Modified;
             await context.SaveChangesAsync();

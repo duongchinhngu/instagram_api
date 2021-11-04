@@ -11,6 +11,7 @@ namespace Instagram.UnitOfWorks
     {
         public IPostRepository IPostRepository { get; }
         public IPostImageRepository IPostImageRepository { get; }
+        public IUserRepository IUserRepository { get; }
         Task Commit();
         Task RollBack();
     }

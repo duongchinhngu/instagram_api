@@ -2,6 +2,7 @@
 using Instagram.HttpMessages.Dtos;
 using Instagram.HttpMessages.Requests;
 using Instagram.HttpMessages.Responses;
+using Instagram.Models;
 using Instagram.Services.IServices;
 using Instagram.UnitOfWorks;
 using System;
@@ -26,6 +27,18 @@ namespace Instagram.Services
         {
             var entity = await unitOfWork.IPostRepository.GetById(id);
             return mapper.Map<PostDto>(entity);
+        }
+
+        public async Task CreateNewPost(CreateNewPostRequest createNewPostRequest)
+        {
+            var post = mapper.Map<Post>(createNewPostRequest);
+            unitOfWork.IPostRepository.Add(post);
+            foreach (var image in post.PostImages)
+            {
+                image.PostId = post.Id;
+                unitOfWork.IPostImageRepository.Add(image);
+            }
+            await unitOfWork.Commit();
         }
 
         public async Task<PagingResponse<PostDto>> QueryPost(GetHomePostRequest request)

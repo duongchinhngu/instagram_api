@@ -10,5 +10,7 @@ namespace Instagram.Services.IServices
     {
         Task<PostDto> GetByID(Guid id);
         Task<PagingResponse<PostDto>> QueryPost(GetHomePostRequest request);
+
+        Task CreateNewPost(CreateNewPostRequest create);
     }
 }

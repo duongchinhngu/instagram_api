@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Instagram.Helpers;
 using Instagram.HttpMessages.Dtos;
+using Instagram.HttpMessages.Requests;
 using Instagram.HttpMessages.Responses;
 using Instagram.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Instagram.AutoMapper
@@ -15,6 +17,9 @@ namespace Instagram.AutoMapper
             CreateMapFromPostToPostDto();
             CreateMapFromPagedListToPagingResponse();
             CreateMapFromImageUserToImageUserDto();
+            CreateMapFromPostToCreateNewPostRequest();
+            CreateMapFromUserToUserDto();
+            CreateMapFromCreatePostImageRequestToPostImage();
         }
 
         private void CreateMapFromPostToPostDto()
@@ -33,6 +38,23 @@ namespace Instagram.AutoMapper
         private void CreateMapFromImageUserToImageUserDto()
         {
             CreateMap<User, UserDto>().ReverseMap();
+        }
+
+        private void CreateMapFromPostToCreateNewPostRequest()
+        {
+            CreateMap<CreateNewPostRequest, Post>()
+                .ForMember(des => des.PostImages, opt => opt.MapFrom(e => e.CreatePostImageRequests))
+                .ForMember(des => des.OwnerId, opt => opt.MapFrom( e => Guid.Parse(e.OwnerId)));
+        }
+
+        private void CreateMapFromUserToUserDto()
+        {
+            CreateMap<User, UserDto>().ReverseMap();
+        }
+        
+        private void CreateMapFromCreatePostImageRequestToPostImage()
+        {
+            CreateMap<CreatePostImageRequest, PostImage>().ReverseMap();
         }
 
         private void CreateMapFromPagedListToPagingResponse()

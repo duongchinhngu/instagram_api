@@ -9,10 +9,13 @@ namespace Instagram.Repositories.IRepositories
     {
         Task<TEntity> GetById(Guid id);
 
-        Task Update(TEntity entity);
+        void Update(TEntity entity);
+        Task UpdateAndSave(TEntity entity);
 
         Task Delete(TEntity entity);
 
-        Task Add(TEntity entity);
+        void Add(TEntity entity);
+        Task AddAndSave(TEntity entity);
+
     }
 }

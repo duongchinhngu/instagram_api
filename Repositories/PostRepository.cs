@@ -30,6 +30,7 @@ namespace Instagram.Repositories
         public async Task<PagedList<Post>> QueryPost(GetHomePostRequest request)
         {
             var entities = context.Posts.Include(s => s.PostImages).Include( s => s.Owner).AsQueryable();
+            entities = entities.OrderByDescending(e => e.ModifiedAt);
             sortHelper.ApplySort<Post>(ref entities, request.SortBy, request.OrderBy);
             return PagedList<Post>.ToPagedList(entities, request.PageNumber, request.PageSize);
         }

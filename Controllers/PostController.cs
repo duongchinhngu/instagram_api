@@ -29,13 +29,12 @@ namespace Instagram.Controllers
             {
                 if (request is null) return BadRequest("request must not be null..");
 
-
                 if (!ModelState.IsValid) return BadRequest("Request has an invalid field input..");
-
 
                 var result = await service.QueryPost(request);
 
-                if (result is null || result.Data is null || !result.Data.Any()) return NotFound();
+                bool isNotNullOrEmpty = result is null || result.Data is null || !result.Data.Any();
+                if (isNotNullOrEmpty) return NotFound();
 
                 return Ok(result);
             }
@@ -50,27 +49,38 @@ namespace Instagram.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
-                {
-                    return BadRequest("Id must be provided..");
-                }
+                if (string.IsNullOrEmpty(id)) return BadRequest("Id must be provided..");
 
-                if (!Guid.TryParse(id, out Guid guidId))
-                {
-                    return BadRequest("Id must be a guid..");
-                }
+                if (!Guid.TryParse(id, out Guid guidId)) return BadRequest("Id must be a guid..");
 
                 var result = await service.GetByID(guidId);
 
-                if (result is null)
-                {
-                    return NotFound();
-                }
+                if (result is null) return NotFound();
+
                 return Ok(result);
             }
             catch (Exception e)
             {
                 return StatusCode(500, "Internal server error: " + e.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostNewPost([FromBody] CreateNewPostRequest createNewPostRequest)
+        {
+            try
+            {
+                if (createNewPostRequest is null) return BadRequest("Create new post request must be provided..");
+
+                if (!ModelState.IsValid) return BadRequest("There is an invalid attribute..");
+
+                await service.CreateNewPost(createNewPostRequest);
+
+                return Created("New post created", createNewPostRequest);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal exception: " + ex.Message);
             }
         }
     }

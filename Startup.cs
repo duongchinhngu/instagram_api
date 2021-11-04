@@ -35,6 +35,7 @@ namespace Instagram
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostImageService, PostImageService>();
             services.AddScoped<ISortHelper, SortHelper>();
         }
@@ -87,7 +88,8 @@ namespace Instagram
             // mapper
             services.AddAutoMapper(typeof(Startup));
             //add db context
-            services.AddDbContext<InstagramDBContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:InstagramDBConnection"]));
+            services.AddDbContext<InstagramDBContext>(opts =>
+                opts.UseSqlServer(Configuration["ConnectionString:InstagramDBConnection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
