@@ -29,16 +29,20 @@ namespace Instagram.Services
             return mapper.Map<PostDto>(entity);
         }
 
-        public async Task CreateNewPost(CreateNewPostRequest createNewPostRequest)
+        public async Task<CreatePostResponse> CreateNewPost(CreateNewPostRequest createNewPostRequest)
         {
             var post = mapper.Map<Post>(createNewPostRequest);
+
             unitOfWork.IPostRepository.Add(post);
             foreach (var image in post.PostImages)
             {
                 image.PostId = post.Id;
                 unitOfWork.IPostImageRepository.Add(image);
             }
+
             await unitOfWork.Commit();
+
+            return new CreatePostResponse { PostId = post.Id };
         }
 
         public async Task<PagingResponse<PostDto>> QueryPost(GetHomePostRequest request)

@@ -5,7 +5,6 @@ using Instagram.HttpMessages.Requests;
 using Instagram.HttpMessages.Responses;
 using Instagram.Models;
 using System;
-using System.Collections.Generic;
 
 namespace Instagram.AutoMapper
 {

@@ -1,10 +1,9 @@
 ﻿using Instagram.CustomValidations;
-using Instagram.HttpMessages.Dtos;
 using Instagram.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Instagram.HttpMessages.Requests
 {

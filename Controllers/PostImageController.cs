@@ -46,7 +46,6 @@ namespace Instagram.Controllers
             }
             catch (Exception e)
             {
-
                 return StatusCode(500, "internal error exception: " + e.Message);
             }
         }
